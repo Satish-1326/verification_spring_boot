@@ -1,9 +1,11 @@
-# 🔐 Login & Logout API (Spring Boot)
+# 🔐 Login & Logout API (Spring Boot + Docker)
 
 ## 📌 Project Overview
 
-This project is a simple **Login & Logout REST API** built using **Spring Boot**.
-It demonstrates user authentication using **HTTP Session (stateful authentication)** without JWT.
+This project is a **REST API for User Authentication** built using **Spring Boot**.
+It provides basic functionality for **user registration, login, logout, and session management** using **HTTP Session (stateful authentication)**.
+
+The project is also **Dockerized**, allowing easy deployment and setup.
 
 ---
 
@@ -13,31 +15,37 @@ It demonstrates user authentication using **HTTP Session (stateful authenticatio
 * ✅ User Login
 * ✅ Session-based Authentication
 * ✅ Logout functionality
-* ✅ Profile check (session validation)
+* ✅ Profile (session check)
+* ✅ Docker support (containerized application)
 
 ---
 
 ## 🛠️ Tech Stack
 
-* Java (Spring Boot)
+* Java 17
+* Spring Boot
 * Spring Web
 * Spring Data JPA
-* MySQL Database
-* Spring Security (basic configuration)
+* Spring Security
+* MySQL
+* Docker
 
 ---
 
 ## 📂 Project Structure
 
 ```
-com.loginlogout
+loginlogout
 │
 ├── controller    → API endpoints
 ├── service       → Business logic
 ├── repository    → Database operations
 ├── entity        → Database table (User)
-├── dto           → Request objects
+├── dto           → Request/Response classes
 ├── config        → Security configuration
+├── Dockerfile
+├── docker-compose.yml
+└── pom.xml
 ```
 
 ---
@@ -90,45 +98,61 @@ GET `/user/profile`
 spring.datasource.url=jdbc:mysql://localhost:3306/authdb
 spring.datasource.username=root
 spring.datasource.password=1234
+
 spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
 ```
 
 ---
 
-### Table Structure
+## 🐳 Docker Setup
 
+### 🔹 Step 1: Build JAR
+
+```bash
+.\mvnw.cmd clean package
 ```
-Table: login
 
-id (INT, PK)
-username (VARCHAR)
-password (VARCHAR)
+---
+
+### 🔹 Step 2: Build Docker Image
+
+```bash
+docker build -t login-app .
+```
+
+---
+
+### 🔹 Step 3: Run Container
+
+```bash
+docker run -p 8080:8080 login-app
+```
+
+---
+
+## 🐳 Docker Compose (Recommended)
+
+### Run App + MySQL together
+
+```bash
+docker-compose up --build
 ```
 
 ---
 
 ## 🔐 Authentication Flow
 
-1. User registers → data stored in database
-2. User logs in → session is created
-3. Session is used to access protected API
+1. User registers → stored in MySQL
+2. User logs in → session created
+3. Session used for authentication
 4. Logout → session invalidated
-
----
-
-## ▶️ How to Run
-
-1. Clone the repository
-2. Open in IntelliJ / Eclipse
-3. Configure MySQL database
-4. Run the Spring Boot application
-5. Test APIs using Postman
 
 ---
 
 ## 🧪 Testing
 
-Use Postman to test APIs:
+Use **Postman**
 
 * POST `/user/register`
 * POST `/user/login`
@@ -137,25 +161,36 @@ Use Postman to test APIs:
 
 ---
 
-## 📌 Important Notes
+## ⚠️ Important Notes
 
-* This project uses **session-based authentication**
-* No JWT used (simple implementation)
-* Spring Security is configured to allow `/user/**` endpoints
+* Uses **HTTP Session (stateful authentication)**
+* No JWT used (basic implementation)
+* Spring Security configured to allow `/user/**` endpoints
+* Tests are skipped during build
 
 ---
 
 ## 📈 Future Improvements
 
-* Add password encryption (BCrypt)
-* Implement JWT authentication
-* Add role-based authorization
-* Build frontend UI
+* 🔒 Password encryption (BCrypt)
+* 🔑 JWT authentication
+* 👥 Role-based authorization
+* 🌐 Frontend integration (React/Angular)
+* ☁️ Deployment on AWS / Railway
+
+---
+
+## ▶️ How to Run (Without Docker)
+
+1. Clone the repository
+2. Configure MySQL
+3. Run the application
+4. Test using Postman
 
 ---
 
 ## 👨‍💻 Author
 
-Satish dadas
+Satish
 
 ---
