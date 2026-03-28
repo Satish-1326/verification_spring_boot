@@ -191,6 +191,6 @@ Use **Postman**
 
 ## 👨‍💻 Author
 
-Satish
+Satish Dadas
 
 ---
