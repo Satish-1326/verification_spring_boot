@@ -1,48 +1,55 @@
-# 🔐 Login & Logout API (Spring Boot + Docker)
+# 🔐 Login & Logout API
 
-## 📌 Project Overview
+### 🚀 Spring Boot • MySQL • Docker • Session-Based Auth
 
-This project is a **REST API for User Authentication** built using **Spring Boot**.
-It provides basic functionality for **user registration, login, logout, and session management** using **HTTP Session (stateful authentication)**.
-
-The project is also **Dockerized**, allowing easy deployment and setup.
+<p align="center">
+  <b>A production-ready authentication API using Spring Boot with Docker support</b>
+</p>
 
 ---
 
-## 🚀 Features
+## 📌 Overview
 
-* ✅ User Registration
-* ✅ User Login
-* ✅ Session-based Authentication
-* ✅ Logout functionality
-* ✅ Profile (session check)
-* ✅ Docker support (containerized application)
+This project is a **RESTful Authentication API** built with **Spring Boot** that provides secure user management using **HTTP Session (stateful authentication)**.
+
+It supports **user registration, login, logout, and session tracking**, and is fully **Dockerized** for easy deployment.
+
+---
+
+## ✨ Features
+
+* 🔐 User Registration & Login
+* 🧠 Session-Based Authentication
+* 🚪 Logout (Session Invalidation)
+* 👤 Profile Access (Session Validation)
+* 🐳 Dockerized Application
+* ⚡ Clean Layered Architecture
 
 ---
 
 ## 🛠️ Tech Stack
 
-* Java 17
-* Spring Boot
-* Spring Web
-* Spring Data JPA
-* Spring Security
-* MySQL
-* Docker
+| Technology      | Usage             |
+| --------------- | ----------------- |
+| Java 17         | Core Language     |
+| Spring Boot     | Backend Framework |
+| Spring Security | Authentication    |
+| Spring Data JPA | ORM               |
+| MySQL           | Database          |
+| Docker          | Containerization  |
 
 ---
 
 ## 📂 Project Structure
 
 ```
-loginlogout
-│
-├── controller    → API endpoints
-├── service       → Business logic
-├── repository    → Database operations
-├── entity        → Database table (User)
-├── dto           → Request/Response classes
-├── config        → Security configuration
+loginlogout/
+├── controller     → API endpoints
+├── service        → Business logic
+├── repository     → DB access
+├── entity         → User model
+├── dto            → Request/Response objects
+├── config         → Security config
 ├── Dockerfile
 ├── docker-compose.yml
 └── pom.xml
@@ -52,9 +59,16 @@ loginlogout
 
 ## ⚙️ API Endpoints
 
-### 🔹 Register User
+| Method | Endpoint         | Description        |
+| ------ | ---------------- | ------------------ |
+| POST   | `/user/register` | Register user      |
+| POST   | `/user/login`    | Login user         |
+| POST   | `/user/logout`   | Logout user        |
+| GET    | `/user/profile`  | Get logged-in user |
 
-POST `/user/register`
+---
+
+### 📥 Sample Request
 
 ```json
 {
@@ -65,65 +79,38 @@ POST `/user/register`
 
 ---
 
-### 🔹 Login User
+## 🗄️ Database Setup
 
-POST `/user/login`
-
-```json
-{
-  "username": "admin",
-  "password": "1234"
-}
-```
-
----
-
-### 🔹 Logout User
-
-POST `/user/logout`
-
----
-
-### 🔹 Get Profile
-
-GET `/user/profile`
-
----
-
-## 🗄️ Database Configuration
-
-### application.properties
+> ⚠️ **Each user must configure their own database**
 
 ```
-spring.datasource.url=jdbc:mysql://localhost:3306/authdb
-spring.datasource.username=root
-spring.datasource.password=1234
-
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
+spring.datasource.url=jdbc:mysql://localhost:3306/your_db_name
+spring.datasource.username=your_username
+spring.datasource.password=your_password
 ```
+
+### 🛑 Note
+
+* No shared database access is provided
+* You must use your own local MySQL instance
 
 ---
 
 ## 🐳 Docker Setup
 
-### 🔹 Step 1: Build JAR
+### 🔹 Build JAR
 
 ```bash
 .\mvnw.cmd clean package
 ```
 
----
-
-### 🔹 Step 2: Build Docker Image
+### 🔹 Build Image
 
 ```bash
 docker build -t login-app .
 ```
 
----
-
-### 🔹 Step 3: Run Container
+### 🔹 Run Container
 
 ```bash
 docker run -p 8080:8080 login-app
@@ -133,7 +120,7 @@ docker run -p 8080:8080 login-app
 
 ## 🐳 Docker Compose (Recommended)
 
-### Run App + MySQL together
+Run full setup (App + MySQL):
 
 ```bash
 docker-compose up --build
@@ -143,16 +130,15 @@ docker-compose up --build
 
 ## 🔐 Authentication Flow
 
-1. User registers → stored in MySQL
-2. User logs in → session created
-3. Session used for authentication
-4. Logout → session invalidated
+```
+Register → Login → Session Created → Access APIs → Logout → Session Destroyed
+```
 
 ---
 
-## 🧪 Testing
+## 🧪 API Testing
 
-Use **Postman**
+Use Postman:
 
 * POST `/user/register`
 * POST `/user/login`
@@ -163,48 +149,42 @@ Use **Postman**
 
 ## ⚠️ Important Notes
 
-* Uses **HTTP Session (stateful authentication)**
-* No JWT used (basic implementation)
-* Spring Security configured to allow `/user/**` endpoints
+* Uses **HTTP Session (Stateful Authentication)**
+* No JWT (beginner-friendly implementation)
+* Spring Security configured for `/user/**`
 * Tests are skipped during build
 
 ---
 
-## 📈 Future Improvements (Comming Soon ... Just Wait And Watch)
+## 📈 Future Enhancements
 
-* 🔒 Password encryption (BCrypt)
-* 🔑 JWT authentication
-* 👥 Role-based authorization
-* 🌐 Frontend integration (React/Angular)
-* ☁️ Deployment on AWS / Railway
+* 🔒 Password Encryption (BCrypt)
+* 🔑 JWT Authentication
+* 👥 Role-Based Authorization
+* 🌐 Frontend Integration
+* ☁️ Cloud Deployment (AWS / Railway)
 
 ---
 
-## ▶️ How to Run (Without Docker)
+## ▶️ Run Locally (Without Docker)
 
-1. Clone the repository
-2. Configure MySQL
-3. Run the application
-4. Test using Postman
+```bash
+git clone <your-repo-url>
+cd loginlogout
+.\mvnw.cmd spring-boot:run
+```
 
 ---
 
 ## 👨‍💻 Author
 
-Satish Dadas
-
-MIT License
-
-Copyright (c) 2026 Satish
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+**Satish Dadas**
 
 ---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+Copyright (c) 2026 Satish 
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
